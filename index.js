@@ -5,7 +5,7 @@ const request = require("request");
 const randomFile = require("select-random-file");
 const recursive = require("recursive-readdir");
 
-const PATH = "/home/storage/";
+const PATH = "/Users/alec/Desktop/basket/storage/";
 
 function gen(m) {
   return Math.floor(Math.random() * m - 1) + 1;
@@ -34,39 +34,38 @@ app.get("/random/*", (req, res) => {
 
 var download = function (uri, filename, callback) {
   request.head(uri, function (err, res, body) {
-    if (err) callback(err, filename);
-    else {
+    if (err) {
+      callback(err, filename);
+    } else {
       var stream = request(uri);
-      try {
-        stream
-          .pipe(
-            fs.createWriteStream(filename).on("error", function (err) {
-              callback(error, filename);
-              stream.read();
-            })
-          )
-          .on("close", function () {
-            callback(null, filename);
-          });
-      } catch (e) {
-        console.error("download caught - ", e);
-      }
+      stream
+        .pipe(
+          fs.createWriteStream(filename).on("error", function (err) {
+            callback(err, filename);
+            stream.read();
+          })
+        )
+        .on("close", function () {
+          callback(null, filename);
+        });
     }
   });
 };
 
 app.get("*", (req, res) => {
-  if (!req.url.includes("save/")) return res.send("500");
   const file = req.url.substring(6, req.url.length);
-  x = new Date();
+  if (!req.url.includes("save/")) return res.sendStatus(500);
+  if (!file) return res.sendStatus(500);
+
+  let x = new Date();
   var UTCseconds = (x.getTime() + x.getTimezoneOffset() * 60 * 1000) / 1000;
-  console.log("UTCseconds", UTCseconds);
-  console.log(file);
   const filename = file.split("\\").pop().split("/").pop();
+
   download(file, PATH + UTCseconds.toString() + "-" + filename, (err, res) => {
-    if (err) console.err(err);
+    if (err) console.error(err);
+    return true;
   });
-  file ? res.send(200) : res.send(500);
+  return res.sendStatus(200);
 });
 
 app.listen(8888);
