@@ -1,0 +1,26 @@
+{
+  "name": "basket",
+  "version": "1.0.0",
+  "description": "a remote fileserver for quick file stashing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alectrocute/basket.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alectrocute/basket/issues"
+  },
+  "homepage": "https://github.com/alectrocute/basket#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "recursive-readdir": "^2.2.2",
+    "request": "^2.88.2",
+    "select-random-file": "^1.1.0"
+  }
+}
