@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/alectrocute/basket#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "recursive-readdir": "^2.2.2",
     "request": "^2.88.2",
     "select-random-file": "^1.1.0"
